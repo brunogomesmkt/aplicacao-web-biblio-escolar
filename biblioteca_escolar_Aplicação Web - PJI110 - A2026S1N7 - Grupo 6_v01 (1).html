@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiblioEscolar — E.E. Profª Maria Helena</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ink2: #2d2d4e;
+    --muted: #6b6b8a;
+    --paper: #faf8f4;
+    --cream: #f2ede3;
+    --accent: #c84b2f;
+    --accent2: #e8a020;
+    --teal: #1e7a6e;
+    --teal-light: #e8f5f3;
+    --border: #e0dbd0;
+    --white: #ffffff;
+    --radius: 12px;
+    --shadow: 0 2px 20px rgba(26,26,46,0.08);
+    --shadow-lg: 0 8px 40px rgba(26,26,46,0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px; color: var(--ink); text-decoration: none;
+  }
+  .nav-logo span {
+    display: inline-block; width: 32px; height: 32px;
+    background: var(--accent); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 16px;
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-size: 14px; color: var(--muted); text-decoration: none;
+    transition: color .2s; font-weight: 400;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all .2s; border: none; font-family: 'DM Sans', sans-serif; text-decoration: none; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #a83820; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200,75,47,0.35); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  .btn-outline:hover { background: var(--cream); border-color: var(--ink); }
+  .btn-teal { background: var(--teal); color: white; }
+  .btn-teal:hover { background: #175f55; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 5% 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 60px; align-items: center;
+    min-height: 88vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -120px; right: -80px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,75,47,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal-light); color: var(--teal);
+    border: 1px solid rgba(30,122,110,0.2);
+    padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    margin-bottom: 24px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge::before { content: ''; width: 7px; height: 7px; background: var(--teal); border-radius: 50%; }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 5vw, 62px); line-height: 1.1;
+    color: var(--ink); margin-bottom: 24px;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero h1 em { color: var(--accent); font-style: italic; }
+  .hero p {
+    font-size: 17px; color: var(--muted); max-width: 480px;
+    margin-bottom: 36px; font-weight: 300; line-height: 1.7;
+    animation: fadeUp .6s .2s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    animation: fadeUp .6s .4s ease both;
+  }
+  .stat { }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--ink); }
+  .stat-lbl { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    animation: fadeUp .7s .2s ease both;
+  }
+  .book-stack {
+    position: relative;
+    width: 100%; max-width: 440px; margin: 0 auto;
+  }
+  .hero-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+  }
+  .hero-card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .book-cover {
+    width: 52px; height: 70px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent) 0%, #a83820 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 22px; flex-shrink: 0;
+  }
+  .book-cover.teal { background: linear-gradient(135deg, var(--teal) 0%, #155f55 100%); }
+  .book-cover.amber { background: linear-gradient(135deg, var(--accent2) 0%, #c07810 100%); }
+  .book-cover.navy { background: linear-gradient(135deg, #2d4a7a 0%, #1a3060 100%); }
+  .book-info h4 { font-size: 15px; font-weight: 500; color: var(--ink); }
+  .book-info p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .availability {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; padding: 3px 10px; border-radius: 999px; margin-top: 6px; font-weight: 500;
+  }
+  .avail-yes { background: #e8f5f0; color: #1e7a6e; }
+  .avail-no { background: #fde8e4; color: var(--accent); }
+  .avail-soon { background: #fef3e2; color: #c07810; }
+  .availability::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .hero-search-bar {
+    display: flex; gap: 8px;
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 14px;
+    align-items: center; margin-top: 20px;
+    font-size: 14px; color: var(--muted);
+  }
+  .hero-search-bar svg { flex-shrink: 0; opacity: .5; }
+
+  .floating-chip {
+    position: absolute;
+    background: white; border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 14px;
+    box-shadow: var(--shadow);
+    font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    animation: float 4s ease-in-out infinite;
+  }
+  .floating-chip.chip1 { top: -20px; right: -30px; color: var(--teal); }
+  .floating-chip.chip2 { bottom: 10px; left: -30px; color: var(--accent); animation-delay: 2s; }
+  .chip-icon { font-size: 18px; }
+
+  /* ── SEARCH SECTION ── */
+  .search-section {
+    background: var(--ink);
+    padding: 60px 5%;
+    margin-top: 0;
+  }
+  .search-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; color: white; text-align: center; margin-bottom: 8px;
+  }
+  .search-section p { text-align: center; color: rgba(255,255,255,0.5); margin-bottom: 32px; font-size: 15px; }
+  .search-bar-big {
+    max-width: 680px; margin: 0 auto;
+    display: flex; gap: 0;
+    background: white; border-radius: 12px;
+    overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+  .search-bar-big input {
+    flex: 1; border: none; outline: none; padding: 18px 22px;
+    font-size: 16px; font-family: 'DM Sans', sans-serif; background: white;
+    color: var(--ink);
+  }
+  .search-bar-big select {
+    border: none; border-left: 1px solid var(--border);
+    outline: none; padding: 18px 16px; background: var(--cream);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--muted); cursor: pointer;
+  }
+  .search-bar-big button {
+    background: var(--accent); color: white; border: none;
+    padding: 18px 28px; font-size: 15px; font-weight: 500; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: background .2s;
+  }
+  .search-bar-big button:hover { background: #a83820; }
+  .search-tags {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px;
+  }
+  .search-tag {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7); padding: 6px 14px; border-radius: 999px;
+    font-size: 13px; cursor: pointer; transition: all .2s;
+  }
+  .search-tag:hover { background: rgba(255,255,255,0.15); color: white; }
+
+  /* ── CATALOG ── */
+  .catalog-section { padding: 72px 5%; }
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 36px;
+  }
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px; color: var(--ink);
+  }
+  .section-header p { color: var(--muted); font-size: 15px; margin-top: 6px; }
+  .filters {
+    display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 7px 18px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    cursor: pointer; border: 1px solid var(--border); background: white;
+    color: var(--muted); transition: all .2s; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+  .filter-btn:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+  .books-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px;
+  }
+  .book-card {
+    background: white; border: 1px solid var(--border); border-radius: var(--radius);
+    overflow: hidden; cursor: pointer; transition: all .25s;
+    animation: fadeUp .5s ease both;
+  }
+  .book-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: transparent; }
+  .book-card-cover {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 48px; position: relative;
+  }
+  .book-card-cover.red { background: linear-gradient(160deg, #f5e6e3, #edd5cf); }
+  .book-card-cover.blue { background: linear-gradient(160deg, #e3e9f5, #cfd8ed); }
+  .book-card-cover.green { background: linear-gradient(160deg, #e3f2ee, #cfe8e1); }
+  .book-card-cover.yellow { background: linear-gradient(160deg, #f5f0e3, #ede3cf); }
+  .book-card-cover.purple { background: linear-gradient(160deg, #ede3f5, #dccfed); }
+  .book-card-cover.orange { background: linear-gradient(160deg, #f5ece3, #eddccf); }
+  .badge-avail {
+    position: absolute; top: 10px; right: 10px;
+    padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .badge-avail.yes { background: var(--teal); color: white; }
+  .badge-avail.no { background: var(--accent); color: white; }
+  .badge-avail.soon { background: var(--accent2); color: white; }
+  .book-card-body { padding: 16px; }
+  .book-card-body h4 { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.4; margin-bottom: 4px; }
+  .book-card-body p { font-size: 13px; color: var(--muted); }
+  .book-card-body .genre { 
+    display: inline-block; margin-top: 10px;
+    background: var(--cream); color: var(--muted);
+    padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 500;
+  }
+  .book-card-actions { padding: 0 16px 16px; }
+  .btn-reserve { width: 100%; padding: 9px; font-size: 13px; text-align: center; border-radius: 8px; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,26,46,0.6); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; animation: fadeIn .2s ease; }
+  .modal {
+    background: white; border-radius: 20px; max-width: 540px; width: 100%;
+    overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    animation: modalSlide .3s ease;
+  }
+  .modal-header {
+    display: flex; gap: 20px; padding: 28px; align-items: flex-start;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-cover {
+    width: 70px; height: 95px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 32px;
+  }
+  .modal-cover.red { background: linear-gradient(160deg, #f5e6e3, #e0b8b0); }
+  .modal-cover.blue { background: linear-gradient(160deg, #e3e9f5, #b0c0e0); }
+  .modal-cover.green { background: linear-gradient(160deg, #e3f2ee, #b0d8ce); }
+  .modal-body { padding: 24px 28px; }
+  .modal-field { margin-bottom: 16px; }
+  .modal-field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+  .modal-field p { font-size: 15px; color: var(--ink); }
+  .modal-actions { padding: 20px 28px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+  .close-modal { background: none; border: none; font-size: 22px; color: var(--muted); cursor: pointer; margin-left: auto; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--cream); padding: 72px 5%;
+  }
+  .how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 48px; }
+  .how-card {
+    background: white; border: 1px solid var(--border); border-radius: 16px;
+    padding: 28px; position: relative; overflow: hidden;
+  }
+  .how-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 72px; color: var(--cream); position: absolute; top: -10px; right: 16px;
+    line-height: 1; pointer-events: none; user-select: none;
+  }
+  .how-icon { font-size: 32px; margin-bottom: 16px; }
+  .how-card h3 { font-size: 18px; font-weight: 500; margin-bottom: 10px; color: var(--ink); }
+  .how-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ── ADMIN DASHBOARD ── */
+  .admin-section { padding: 72px 5%; }
+  .admin-section > .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fde8e4; color: var(--accent); padding: 6px 14px; border-radius: 999px;
+    font-size: 13px; font-weight: 500; margin-bottom: 16px;
+  }
+  .dashboard-preview {
+    background: var(--ink); border-radius: 20px; overflow: hidden;
+    box-shadow: var(--shadow-lg); margin-top: 32px;
+  }
+  .dash-topbar {
+    background: var(--ink2); padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dash-topbar-left { display: flex; gap: 8px; align-items: center; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #27c93f; }
+  .dash-topbar-right { font-size: 13px; color: rgba(255,255,255,0.4); }
+  .dash-body { display: grid; grid-template-columns: 200px 1fr; min-height: 420px; }
+  .dash-sidebar {
+    background: rgba(255,255,255,0.04); border-right: 1px solid rgba(255,255,255,0.08);
+    padding: 20px 0;
+  }
+  .dash-menu-item {
+    padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.45);
+    cursor: pointer; display: flex; align-items: center; gap: 10px;
+    transition: all .2s; font-weight: 400;
+  }
+  .dash-menu-item:hover, .dash-menu-item.active {
+    background: rgba(255,255,255,0.07); color: white;
+  }
+  .dash-menu-item.active { border-left: 2px solid var(--accent); }
+  .dash-content { padding: 24px; overflow: hidden; }
+  .dash-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+  .dash-stat {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 16px;
+  }
+  .dash-stat .val { font-family: 'DM Serif Display', serif; font-size: 28px; color: white; }
+  .dash-stat .lbl { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .dash-stat .delta { font-size: 11px; margin-top: 6px; }
+  .dash-stat .delta.up { color: #4cc38a; }
+  .dash-stat .delta.down { color: #e06b5c; }
+  .dash-table-wrap {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; overflow: hidden;
+  }
+  .dash-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .dash-table th {
+    padding: 12px 14px; text-align: left; font-size: 11px; font-weight: 500;
+    color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: .06em;
+    border-bottom: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03);
+  }
+  .dash-table td { padding: 12px 14px; color: rgba(255,255,255,0.75); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .dash-table tr:last-child td { border-bottom: none; }
+  .dash-table tr:hover td { background: rgba(255,255,255,0.04); }
+  .status-pill {
+    padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 500;
+  }
+  .s-active { background: rgba(76,195,138,0.2); color: #4cc38a; }
+  .s-pending { background: rgba(232,160,32,0.2); color: var(--accent2); }
+  .s-late { background: rgba(224,107,92,0.2); color: #e06b5c; }
+
+  /* ── LOGIN ── */
+  .auth-section { padding: 80px 5%; background: var(--paper); }
+  .auth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 960px; margin: 0 auto; }
+  .auth-visual { }
+  .auth-visual-inner {
+    background: linear-gradient(135deg, var(--ink) 0%, var(--ink2) 100%);
+    border-radius: 20px; padding: 40px; color: white;
+    position: relative; overflow: hidden;
+  }
+  .auth-visual-inner::after {
+    content: '📚'; font-size: 120px; opacity: .07;
+    position: absolute; bottom: -20px; right: -20px;
+  }
+  .auth-visual-inner h3 { font-family: 'DM Serif Display', serif; font-size: 28px; margin-bottom: 12px; }
+  .auth-visual-inner p { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+  .auth-perks { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+  .auth-perk { display: flex; align-items: center; gap: 12px; font-size: 14px; color: rgba(255,255,255,0.8); }
+  .auth-perk::before { content: '✓'; width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .form-card {
+    background: white; border: 1px solid var(--border); border-radius: 20px; padding: 36px;
+    box-shadow: var(--shadow);
+  }
+  .form-tabs { display: flex; background: var(--cream); border-radius: 10px; padding: 4px; margin-bottom: 28px; }
+  .form-tab {
+    flex: 1; padding: 9px; text-align: center; border-radius: 7px;
+    font-size: 14px; font-weight: 500; cursor: pointer; transition: all .2s; color: var(--muted);
+    border: none; background: transparent; font-family: 'DM Sans', sans-serif;
+  }
+  .form-tab.active { background: white; color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+  .form-group { margin-bottom: 18px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 11px 14px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 15px; font-family: 'DM Sans', sans-serif;
+    background: var(--paper); color: var(--ink); outline: none; transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--ink); background: white; }
+  .form-footer { text-align: center; margin-top: 16px; font-size: 13px; color: var(--muted); }
+  .form-footer a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,0.6);
+    padding: 48px 5% 32px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; margin-bottom: 12px; }
+  .footer-desc { font-size: 14px; line-height: 1.7; max-width: 300px; }
+  .footer-col h5 { font-size: 13px; font-weight: 500; color: white; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+  .footer-col a { display: block; font-size: 14px; margin-bottom: 8px; text-decoration: none; color: rgba(255,255,255,0.5); transition: color .2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; font-size: 13px; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    background: var(--ink); color: white; padding: 14px 20px;
+    border-radius: 12px; font-size: 14px; box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 10px;
+    transform: translateY(80px); opacity: 0; transition: all .3s ease;
+    max-width: 320px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { font-size: 18px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes modalSlide { from { opacity: 0; transform: scale(.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 40px; min-height: auto; }
+    .hero-visual { display: none; }
+    .how-grid, .auth-grid { grid-template-columns: 1fr; }
+    .dash-body { grid-template-columns: 1fr; }
+    .dash-sidebar { display: none; }
+    .dash-stats { grid-template-columns: repeat(2,1fr); }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .nav-links { display: none; }
+    .books-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  }
+
+  /* Section label utility */
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500; margin-bottom: 12px;
+    padding: 5px 14px; border-radius: 999px;
+  }
+  .label-teal { background: var(--teal-light); color: var(--teal); border: 1px solid rgba(30,122,110,0.15); }
+  .label-accent { background: #fde8e4; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span>📖</span>
+    BiblioEscolar
+  </a>
+  <div class="nav-links">
+    <a href="#catalogo">Catálogo</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#admin">Área Admin</a>
+    <a href="#login">Entrar</a>
+    <a href="#login" class="btn btn-primary">Cadastrar-se</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">E.E. Profª Maria Helena Gonçalves de Arruda</div>
+    <h1>Sua biblioteca,<br><em>onde você estiver</em></h1>
+    <p>Consulte o acervo, reserve livros e acompanhe seus empréstimos direto do celular. Tecnologia a serviço da leitura na escola.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn btn-primary">🔍 Explorar acervo</a>
+      <a href="#login" class="btn btn-outline">Fazer cadastro</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">1.240</div>
+        <div class="stat-lbl">livros no acervo</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">380</div>
+        <div class="stat-lbl">alunos cadastrados</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-lbl">satisfação dos usuários</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="book-stack">
+      <div class="floating-chip chip1">
+        <span class="chip-icon">✅</span> Reserva confirmada!
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="book-cover">📗</div>
+          <div class="book-info">
+            <h4>Dom Casmurro</h4>
+            <p>Machado de Assis · Romance</p>
+            <span class="availability avail-yes">Disponível</span>
+          </div>
+        </div>
+        <div class="hero-card-header">
+          <div class="book-cover teal">🔬</div>
+          <div class="book-info">
+            <h4>O Cortiço</h4>
+            <p>Aluísio Azevedo · Romance</p>
+            <span class="availability avail-soon">Devol. em 3 dias</span>
+          </div>
+        </div>
+        <div class="hero-card-header" style="margin-bottom:0">
+          <div class="book-cover amber">📐</div>
+          <div class="book-info">
+            <h4>A Moreninha</h4>
+            <p>J. M. de Macedo · Romance</p>
+            <span class="availability avail-no">Emprestado</span>
+          </div>
+        </div>
+        <div class="hero-search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Buscar por título, autor ou gênero...
+        </div>
+      </div>
+      <div class="floating-chip chip2">
+        <span class="chip-icon">📅</span> Devolução: 04/04
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEARCH SECTION -->
+<section class="search-section">
+  <h2>Encontre seu próximo livro</h2>
+  <p>Busque por título, autor, gênero ou ISBN</p>
+  <div class="search-bar-big">
+    <input type="text" id="searchInput" placeholder="Ex: Machado de Assis, aventura, Dom Quixote..." />
+    <select id="searchFilter">
+      <option value="all">Todos os campos</option>
+      <option value="titulo">Título</option>
+      <option value="autor">Autor</option>
+      <option value="genero">Gênero</option>
+    </select>
+    <button onclick="doSearch()">Buscar →</button>
+  </div>
+  <div class="search-tags">
+    <span class="search-tag" onclick="quickSearch('Literatura Brasileira')">Literatura Brasileira</span>
+    <span class="search-tag" onclick="quickSearch('Ficção Científica')">Ficção Científica</span>
+    <span class="search-tag" onclick="quickSearch('Aventura')">Aventura</span>
+    <span class="search-tag" onclick="quickSearch('Poesia')">Poesia</span>
+    <span class="search-tag" onclick="quickSearch('História')">História</span>
+    <span class="search-tag" onclick="quickSearch('Filosofia')">Filosofia</span>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section class="catalog-section" id="catalogo">
+  <div class="section-header">
+    <div>
+      <span class="section-label label-teal">Acervo digital</span>
+      <h2>Catálogo de Livros</h2>
+      <p>Explore nosso acervo completo e reserve online</p>
+    </div>
+    <a href="#" class="btn btn-outline">Ver todos →</a>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterBooks('all', this)">Todos</button>
+    <button class="filter-btn" onclick="filterBooks('disponivel', this)">✅ Disponíveis</button>
+    <button class="filter-btn" onclick="filterBooks('Romance', this)">Romance</button>
+    <button class="filter-btn" onclick="filterBooks('Aventura', this)">Aventura</button>
+    <button class="filter-btn" onclick="filterBooks('Poesia', this)">Poesia</button>
+    <button class="filter-btn" onclick="filterBooks('Ficção', this)">Ficção</button>
+    <button class="filter-btn" onclick="filterBooks('História', this)">História</button>
+  </div>
+
+  <div class="books-grid" id="booksGrid">
+    <!-- books injected by JS -->
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="como-funciona">
+  <div style="text-align:center">
+    <span class="section-label label-teal">Simples e rápido</span>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:36px;margin-top:8px">Como funciona?</h2>
+    <p style="color:var(--muted);margin-top:8px;font-size:15px">Em 3 passos você já tem seu livro reservado</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-card">
+      <span class="how-num">1</span>
+      <div class="how-icon">🔍</div>
+      <h3>Busque o livro</h3>
+      <p>Use a barra de busca para encontrar qualquer título do acervo. Filtre por autor, gênero ou verifique a disponibilidade em tempo real.</p>
+    </div>
+    <div class="how-card">
+      <span class="how-num">2</span>
+      <div class="how-icon">📌</div>
+      <h3>Faça a reserva</h3>
+      <p>Com um clique, reserve o exemplar desejado. Você receberá confirmação imediata e terá 24h para retirar na biblioteca.</p>
+    </div>
+    <div class="how-card">
+      <span class="how-num">3</span>
+      <div class="how-icon">📖</div>
+      <h3>Retire e leia</h3>
+      <p>Apresente seu cadastro ao bibliotecário, retire o livro e aproveite! Acompanhe o prazo de devolução pelo painel da sua conta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section class="admin-section" id="admin">
+  <span class="section-label label-accent">🔐 Área administrativa</span>
+  <h2 style="font-family:'DM Serif Display',serif;font-size:36px;margin-bottom:8px">Painel do Bibliotecário</h2>
+  <p style="color:var(--muted);font-size:15px">Gestão completa do acervo e controle de empréstimos em tempo real</p>
+
+  <div class="dashboard-preview">
+    <div class="dash-topbar">
+      <div class="dash-topbar-left">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
+        <span style="color:rgba(255,255,255,0.3);font-size:13px;margin-left:10px">BiblioAdmin — Dashboard</span>
+      </div>
+      <div class="dash-topbar-right">Bibliotecário: Lucas Fonseca</div>
+    </div>
+
+    <div class="dash-body">
+      <div class="dash-sidebar">
+        <div class="dash-menu-item active">📊 Dashboard</div>
+        <div class="dash-menu-item">📚 Acervo</div>
+        <div class="dash-menu-item">🔄 Empréstimos</div>
+        <div class="dash-menu-item">👥 Alunos</div>
+        <div class="dash-menu-item">📋 Relatórios</div>
+        <div class="dash-menu-item">⚙️ Configurações</div>
+      </div>
+
+      <div class="dash-content">
+        <div class="dash-stats">
+          <div class="dash-stat">
+            <div class="val">1.240</div>
+            <div class="lbl">Livros no acervo</div>
+            <div class="delta up">↑ +12 este mês</div>
+          </div>
+          <div class="dash-stat">
+            <div class="val">47</div>
+            <div class="lbl">Empréstimos ativos</div>
+            <div class="delta up">↑ +5 esta semana</div>
+          </div>
+          <div class="dash-stat">
+            <div class="val">8</div>
+            <div class="lbl">Devoluções hoje</div>
+            <div class="delta down">↓ 3 em atraso</div>
+          </div>
+          <div class="dash-stat">
+            <div class="val">380</div>
+            <div class="lbl">Alunos cadastrados</div>
+            <div class="delta up">↑ +14 este mês</div>
+          </div>
+        </div>
+
+        <div class="dash-table-wrap">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Aluno</th>
+                <th>Livro</th>
+                <th>Saída</th>
+                <th>Devolução</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ana Paula S.</td>
+                <td>Dom Casmurro</td>
+                <td>20/03/2026</td>
+                <td>03/04/2026</td>
+                <td><span class="status-pill s-active">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>Carlos Lima</td>
+                <td>O Cortiço</td>
+                <td>15/03/2026</td>
+                <td>29/03/2026</td>
+                <td><span class="status-pill s-late">Atrasado</span></td>
+              </tr>
+              <tr>
+                <td>Beatriz Rocha</td>
+                <td>A Moreninha</td>
+                <td>22/03/2026</td>
+                <td>05/04/2026</td>
+                <td><span class="status-pill s-active">Ativo</span></td>
+              </tr>
+              <tr>
+                <td>Marcos Alves</td>
+                <td>Capitães da Areia</td>
+                <td>18/03/2026</td>
+                <td>01/04/2026</td>
+                <td><span class="status-pill s-pending">Reservado</span></td>
+              </tr>
+              <tr>
+                <td>Julia Ferreira</td>
+                <td>Iracema</td>
+                <td>25/03/2026</td>
+                <td>08/04/2026</td>
+                <td><span class="status-pill s-active">Ativo</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTH -->
+<section class="auth-section" id="login">
+  <div class="auth-grid">
+    <div class="auth-visual">
+      <div class="auth-visual-inner">
+        <h3>Acesso à biblioteca na palma da sua mão</h3>
+        <p>Cadastre-se gratuitamente e tenha acesso completo ao acervo da escola, histórico de empréstimos e reservas online.</p>
+        <div class="auth-perks">
+          <div class="auth-perk">Busca avançada por título, autor e gênero</div>
+          <div class="auth-perk">Reserve livros sem sair de casa</div>
+          <div class="auth-perk">Alertas de prazo de devolução</div>
+          <div class="auth-perk">Histórico completo de leituras</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-card">
+        <div class="form-tabs">
+          <button class="form-tab active" onclick="switchTab('login', this)">Entrar</button>
+          <button class="form-tab" onclick="switchTab('cadastro', this)">Cadastrar</button>
+        </div>
+
+        <div id="tab-login">
+          <div class="form-group">
+            <label>E-mail ou matrícula</label>
+            <input type="text" placeholder="seu@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Senha</label>
+            <input type="password" placeholder="••••••••" />
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;padding:13px" onclick="showToast('✅','Login realizado com sucesso!')">Entrar na minha conta</button>
+          <div class="form-footer"><a href="#">Esqueci minha senha</a></div>
+        </div>
+
+        <div id="tab-cadastro" style="display:none">
+          <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" placeholder="Seu nome" />
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" placeholder="seu@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Turma</label>
+            <select>
+              <option>Selecione sua turma</option>
+              <option>1º Ano A</option>
+              <option>1º Ano B</option>
+              <option>2º Ano A</option>
+              <option>2º Ano B</option>
+              <option>3º Ano A</option>
+              <option>3º Ano B</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Senha</label>
+            <input type="password" placeholder="Crie uma senha" />
+          </div>
+          <button class="btn btn-teal" style="width:100%;justify-content:center;padding:13px" onclick="showToast('🎉','Cadastro realizado! Bem-vindo(a)!')">Criar minha conta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">📖 BiblioEscolar</div>
+      <p class="footer-desc">Sistema web de gerenciamento de biblioteca desenvolvido para a E.E. Profª Maria Helena Gonçalves de Arruda, Brasilândia — São Paulo.</p>
+      <p style="font-size:13px;margin-top:16px;color:rgba(255,255,255,0.3)">Projeto Integrador · UNIVESP 2026</p>
+    </div>
+    <div class="footer-col">
+      <h5>Acervo</h5>
+      <a href="#">Catálogo completo</a>
+      <a href="#">Novidades</a>
+      <a href="#">Mais emprestados</a>
+      <a href="#">Por gênero</a>
+    </div>
+    <div class="footer-col">
+      <h5>Suporte</h5>
+      <a href="#">Como funciona</a>
+      <a href="#">Regras de empréstimo</a>
+      <a href="#">Contato</a>
+      <a href="#">Área do bibliotecário</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 BiblioEscolar · UNIVESP · Todos os direitos reservados</span>
+    <span>Django + Python · Git · SQLite</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-cover" id="modalCover" style="font-size:36px;display:flex;align-items:center;justify-content:center;"></div>
+      <div style="flex:1">
+        <h2 style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink)" id="modalTitle"></h2>
+        <p style="color:var(--muted);font-size:14px;margin-top:4px" id="modalAuthor"></p>
+        <div id="modalAvail" style="margin-top:8px"></div>
+      </div>
+      <button class="close-modal" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-field">
+        <label>Gênero</label>
+        <p id="modalGenre"></p>
+      </div>
+      <div class="modal-field">
+        <label>Sinopse</label>
+        <p id="modalDesc" style="font-size:14px;color:var(--muted);line-height:1.65"></p>
+      </div>
+      <div class="modal-field">
+        <label>Exemplares disponíveis</label>
+        <p id="modalCopies"></p>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="reserveBtn" onclick="reserveBook()">📌 Reservar este livro</button>
+      <button class="btn btn-outline" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toastIcon"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+const books = [
+  { id:1, emoji:'📗', color:'green', title:'Dom Casmurro', author:'Machado de Assis', genre:'Romance', status:'disponivel', copies:2, desc:'Uma das obras mais célebres da literatura brasileira, narrada por Bentinho (Capitu), que conta sua história de amor marcada pela dúvida e ciúme.' },
+  { id:2, emoji:'📘', color:'blue', title:'O Cortiço', author:'Aluísio Azevedo', genre:'Romance', status:'quase', copies:0, desc:'Clássico do naturalismo brasileiro que retrata a vida coletiva num cortiço carioca, explorando temas como mestiçagem e determinismo social.' },
+  { id:3, emoji:'📙', color:'orange', title:'Capitães da Areia', author:'Jorge Amado', genre:'Romance', status:'disponivel', copies:3, desc:'Romance que narra a vida de meninos abandonados em Salvador, Bahia, que formam uma gangue e sobrevivem nas ruas da cidade.' },
+  { id:4, emoji:'🔴', color:'red', title:'A Moreninha', author:'J. M. de Macedo', genre:'Romance', status:'indisponivel', copies:0, desc:'Considerado o primeiro romance brasileiro, narra um idílio amoroso entre jovens estudantes de medicina no Rio de Janeiro do século XIX.' },
+  { id:5, emoji:'📕', color:'red', title:'Iracema', author:'José de Alencar', genre:'Romance', status:'disponivel', copies:1, desc:'Poema em prosa que conta a história da índia Iracema, "a virgem dos lábios de mel", e sua trágica história de amor com o guerreiro Martim.' },
+  { id:6, emoji:'🟣', color:'purple', title:'Vidas Secas', author:'Graciliano Ramos', genre:'Romance', status:'disponivel', copies:2, desc:'Retrato da seca nordestina e das agruras de uma família de retirantes, Fabiano e sua família, narrado com linguagem seca e direta.' },
+  { id:7, emoji:'📗', color:'green', title:'O Guarani', author:'José de Alencar', genre:'Aventura', status:'disponivel', copies:2, desc:'Romance indianista que narra a história do índio Peri e sua relação com Ceci, filha de um fidalgo português no Brasil colonial.' },
+  { id:8, emoji:'📘', color:'blue', title:'Macunaíma', author:'Mário de Andrade', genre:'Ficção', status:'disponivel', copies:1, desc:'Herói sem nenhum caráter, protagonista desta obra-prima do modernismo brasileiro que retrata a identidade nacional de forma satírica e poética.' },
+  { id:9, emoji:'🟡', color:'yellow', title:'Poesia Completa', author:'Carlos Drummond', genre:'Poesia', status:'disponivel', copies:3, desc:'Coletânea da obra poética do maior poeta brasileiro do século XX, abrangendo desde os poemas modernistas até as reflexões sobre o cotidiano.' },
+  { id:10, emoji:'📙', color:'orange', title:'Terra do Sem Fim', author:'Jorge Amado', genre:'História', status:'quase', copies:0, desc:'Épico sobre o desbravamento das terras de cacau no sul da Bahia, retratando conflitos, ambição e brutalidade na conquista da terra.' },
+  { id:11, emoji:'🔴', color:'red', title:'Grande Sertão: Veredas', author:'João Guimarães Rosa', genre:'Romance', status:'disponivel', copies:1, desc:'Obra-prima da literatura universal, narra a trajetória do jagunço Riobaldo pelo sertão de Minas Gerais, em diálogo com um interlocutor silencioso.' },
+  { id:12, emoji:'📕', color:'purple', title:'O Quinze', author:'Rachel de Queiroz', genre:'Romance', status:'disponivel', copies:2, desc:'Primeiro romance de Rachel de Queiroz, retrata a seca de 1915 no Ceará e seus efeitos devastadores sobre as famílias sertanejas.' },
+];
+
+let currentBooks = [...books];
+let selectedBook = null;
+
+function renderBooks(list) {
+  const grid = document.getElementById('booksGrid');
+  const statusMap = { disponivel:'yes', quase:'soon', indisponivel:'no' };
+  const statusLabel = { disponivel:'Disponível', quase:'Dev. em breve', indisponivel:'Emprestado' };
+  grid.innerHTML = list.map((b, i) => `
+    <div class="book-card" style="animation-delay:${i*0.05}s" onclick="openModal(${b.id})">
+      <div class="book-card-cover ${b.color}">
+        ${b.emoji}
+        <span class="badge-avail ${statusMap[b.status]}">${statusLabel[b.status]}</span>
+      </div>
+      <div class="book-card-body">
+        <h4>${b.title}</h4>
+        <p>${b.author}</p>
+        <span class="genre">${b.genre}</span>
+      </div>
+      <div class="book-card-actions">
+        <button class="btn ${b.status === 'disponivel' ? 'btn-primary' : 'btn-outline'} btn-reserve"
+          onclick="event.stopPropagation(); ${b.status === 'disponivel' ? `openModal(${b.id})` : 'void(0)'}">
+          ${b.status === 'disponivel' ? '📌 Reservar' : b.status === 'quase' ? '🔔 Notificar-me' : '❌ Indisponível'}
+        </button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterBooks(type, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (type === 'all') { renderBooks(books); return; }
+  if (type === 'disponivel') { renderBooks(books.filter(b => b.status === 'disponivel')); return; }
+  renderBooks(books.filter(b => b.genre === type));
+}
+
+function doSearch() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  if (!q) { renderBooks(books); return; }
+  const res = books.filter(b =>
+    b.title.toLowerCase().includes(q) ||
+    b.author.toLowerCase().includes(q) ||
+    b.genre.toLowerCase().includes(q)
+  );
+  renderBooks(res.length ? res : []);
+  if (!res.length) {
+    document.getElementById('booksGrid').innerHTML = '<p style="color:var(--muted);font-size:15px;padding:20px;grid-column:1/-1">Nenhum livro encontrado para "' + q + '".</p>';
+  }
+  document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth' });
+}
+
+function quickSearch(term) {
+  document.getElementById('searchInput').value = term;
+  doSearch();
+}
+
+document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+function openModal(id) {
+  const b = books.find(x => x.id === id);
+  if (!b) return;
+  selectedBook = b;
+  const statusMap = { disponivel:'avail-yes', quase:'avail-soon', indisponivel:'avail-no' };
+  const statusLabel = { disponivel:'Disponível agora', quase:'Devolução em breve', indisponivel:'Todos os exemplares emprestados' };
+  document.getElementById('modalCover').innerHTML = b.emoji;
+  document.getElementById('modalCover').className = 'modal-cover ' + b.color;
+  document.getElementById('modalTitle').textContent = b.title;
+  document.getElementById('modalAuthor').textContent = b.author;
+  document.getElementById('modalGenre').textContent = b.genre;
+  document.getElementById('modalDesc').textContent = b.desc;
+  document.getElementById('modalCopies').textContent = b.copies > 0 ? b.copies + ' exemplar(es)' : '0 exemplares disponíveis';
+  document.getElementById('modalAvail').innerHTML = `<span class="availability ${statusMap[b.status]}">${statusLabel[b.status]}</span>`;
+  const btn = document.getElementById('reserveBtn');
+  btn.disabled = b.status === 'indisponivel';
+  btn.style.opacity = b.status === 'indisponivel' ? '.4' : '1';
+  btn.textContent = b.status === 'disponivel' ? '📌 Reservar este livro' : b.status === 'quase' ? '🔔 Notificar quando disponível' : '❌ Indisponível';
+  document.getElementById('bookModal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('bookModal').classList.remove('open'); }
+
+document.getElementById('bookModal').addEventListener('click', e => { if (e.target === document.getElementById('bookModal')) closeModal(); });
+
+function reserveBook() {
+  if (!selectedBook) return;
+  closeModal();
+  showToast('📌', `"${selectedBook.title}" reservado com sucesso! Retire na biblioteca em até 24h.`);
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.form-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('tab-cadastro').style.display = tab === 'cadastro' ? 'block' : 'none';
+}
+
+function showToast(icon, msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastIcon').textContent = icon;
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+renderBooks(books);
+</script>
+</body>
+</html>
